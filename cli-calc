@@ -1,0 +1,63 @@
+supported_operations = ['+', '-', '*', '/']
+
+def clean_string(raw_string):
+    result = ' '.join(raw_string.split())
+    result = result.lower()
+    return result
+
+def is_int(value):
+    try:
+        int(value)
+        return True
+    except ValueError:
+        return False
+
+def is_valuable_expression(data):
+    if len(data) != 3:
+        return False
+    if not is_int(data[0]) or not is_int(data[2]):
+        return False 
+    if data[1] not in supported_operations:
+        return False
+    return True
+
+def parse(string):
+    result = string.split()
+    return result
+
+def evaluate(data):
+    result = 0
+    if data[1] == '+':
+        result = int(data[0]) + int(data[2])
+    if data[1] == '-':
+        result = int(data[0]) - int(data[2])
+    if data[1] == '*':
+        result = int(data[0]) * int(data[2])
+    if data[1] == '/':
+        result = int(data[0]) / int(data[2])
+    return result
+
+def calculator():
+    print('Hello, its CLI calculator. Supported operations: addition, subtraction, division')
+    
+    while 1:
+        input_string_raw = input('Input expression. Example: 5 + 6\n')
+        
+        input_string = clean_string(input_string_raw)
+        
+        data = parse(input_string)
+
+        if not is_valuable_expression(data):
+            print('Something went wrong. Please rewrite the exression folowing the example style')
+            continue
+        
+        result = evaluate(data)
+
+        print('Expression result:', result)
+
+        if input_string.lower() == 'exit' or input_string.lower() == 'e':
+            exit()
+
+
+calculator()
+
